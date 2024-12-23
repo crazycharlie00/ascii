@@ -57,6 +57,7 @@
         <div class="mb-3">
             <input type="file" class="form-control" id="image-input" accept="image/gif, image/jpeg, image/png">
         </div>
+        <button id="download-btn" class="btn btn-success mb-3" style="display: none;">Download ASCII Art</button>
         <div id="ascii-output" class="p-3 border rounded">ASCII art will appear here...</div>
     </div>
 
@@ -113,6 +114,10 @@
 
                 const asciiArt = imageToAscii(img);
                 asciiOutput.textContent = asciiArt;
+
+                const downloadBtn = document.getElementById('download-btn');
+                downloadBtn.style.display = 'block';
+                downloadBtn.onclick = () => downloadAscii(asciiArt);
             } catch (error) {
                 asciiOutput.textContent = "Error processing image: " + error.message;
             }
@@ -158,9 +163,21 @@
             return ascii;
         }
 
+        function downloadAscii(asciiArt) {
+            const blob = new Blob([asciiArt], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'ascii-art.txt';
+            link.click();
+        }
+
         function copyAddress() {
             const address = "8wouANy26Z4NsbR8djQmcWGmMCFJ753y7SWSJ1u1pump"; // Replace with your address
-            navigator.clipboard.writeText(address)
+            navigator.clipboard.writeText(address).then(() => {
+                alert("Address copied to clipboard!");
+            }).catch(() => {
+                alert("Failed to copy address.");
+            });
         }
     </script>
 </body>
