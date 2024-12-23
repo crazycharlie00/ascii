@@ -173,11 +173,7 @@
 
         function copyAddress() {
             const address = "8wouANy26Z4NsbR8djQmcWGmMCFJ753y7SWSJ1u1pump"; // Replace with your address
-            navigator.clipboard.writeText(address).then(() => {
-                alert("Address copied to clipboard!");
-            }).catch(() => {
-                alert("Failed to copy address.");
-            });
+            navigator.clipboard.writeText(address)
         }
     </script>
 </body>
